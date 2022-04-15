@@ -40,4 +40,20 @@ public class CustomerService {
 		 String output = customerObj.insertCustomer(cus_name, cus_address, cus_phone_no, cus_nic,username,password); 
 		 return output; 
 	 }
+	 
+	 @GET
+	 @Path("/login")
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 @Produces(MediaType.TEXT_PLAIN)
+	 public String loginCustomer(String loginData)
+	 {
+			//Convert the input string to a JSON object 
+		 JsonObject loginObject = new JsonParser().parse(loginData).getAsJsonObject();
+		 
+		 String username = loginObject.get("username").getAsString(); 
+		 String password = loginObject.get("password").getAsString(); 
+
+		 String output = customerObj.loginCustomer(username, password);
+		 return output;
+	 }
 }
