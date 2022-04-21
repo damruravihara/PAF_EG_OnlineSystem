@@ -1,12 +1,9 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement; 
+import java.sql.*;  
 
 public class PowerConsumption {
+	
 	
 	private Connection connect()
 	{
@@ -25,7 +22,7 @@ public class PowerConsumption {
 		return con;
 	}	
 
-public String InsertPowerConsumptionDetails(String customerName, int accountNumber, int units, int days) {
+public String InsertPowerConsumptionDetails(String customerName, String accountNumber, String units, String days) {
  
 	String output = "";
 	try {
@@ -35,16 +32,16 @@ public String InsertPowerConsumptionDetails(String customerName, int accountNumb
 		{return  "Error while connecting to the database for inserting.";}
 		
 		// create a prepared statement
-		String query = "  insert into customer (`accountNumber`,`customerName`,`units`,`days`)" + " values (?, ?, ?, ?)";
+		String query = "  insert into powerconsumption (`accountNumber`,`customerName`,`units`,`days`)" + " values (?, ?, ?, ?)";
 		
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		
 		 // binding values
 		 preparedStmt.setInt(1, 0); 
-		 preparedStmt.setInt(2, accountNumber);
+		 preparedStmt.setString(2, accountNumber);
 		 preparedStmt.setString(3, customerName); 
-		 preparedStmt.setInt(4, units); 
-		 preparedStmt.setInt(5, days);
+		 preparedStmt.setString(4, units); 
+		 preparedStmt.setString(5, days);
 	
 		 
 		// execute the statement
@@ -85,10 +82,12 @@ public String readPwerConsumption() {
 		 ResultSet rs = stmt.executeQuery(query); 
 		 
 		 while(rs.next()) {
-			 String accountNumber = Integer.toString(rs.getInt("idcustomer")); 
-			 String customerName = rs.getString("cus_name"); 
-			 String units = rs.getString("cus_address"); 
-			 String days = rs.getString("cus_phone_no"); 
+			 
+			 
+			 String accountNumber = Integer.toString(rs.getInt("accountNumber")); 
+			 String customerName = rs.getString("customerName"); 
+			 String units = rs.getString("units"); 
+			 String days = rs.getString("days"); 
 			
 			 
 			 // Add into the html table
