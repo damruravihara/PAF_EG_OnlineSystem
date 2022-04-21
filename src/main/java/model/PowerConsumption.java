@@ -51,7 +51,7 @@ public String InsertPowerConsumptionDetails(String customerName, String accountN
 		 output = "Inserted successfully"; 
 	}
 	catch (Exception e) {
-		 output = "Error while inserting the Customer."; 
+		 output = "Error while inserting the Power Consumption."; 
 		 System.err.println(e.getMessage()); 
 	}
 	
