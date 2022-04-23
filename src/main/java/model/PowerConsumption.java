@@ -80,7 +80,7 @@ public String readPwerConsumption() {
 		 		+ "<th>Account Number</th>" +
 		 		  "<th>CustomerName</th>" + 
 		 		  "<th>Units</th>" +
-		 		  "<th>Days</th>" +
+		 		  "<th>Days</th>" +		 		  
 		 		  "<th>Update</th>"+
 		 		  "<th>Remove</th></tr>";
 		 
@@ -97,7 +97,7 @@ public String readPwerConsumption() {
 			 String days = rs.getString("days"); 
 			
 			 
-			 // Add into the html table
+			 // Add into the HTML table
 			 output += "<tr><td>" + userID + "</td>"; 
 			 output += "<td>" + account_Number + "</td>";
 			 output += "<td>" + cus_name + "</td>"; 
@@ -107,7 +107,7 @@ public String readPwerConsumption() {
 			 
 			 // buttons
 			 output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>" + "<td><form method='post' action='customer.jsp'>"
-			 + "<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
+			 + "<input name='btnRemove' type='submit' value='Delete'class='btn btn-danger'>"
 			 + "<input name='idcustomer' type='hidden' value='" + account_Number + "'>" + "</form></td></tr>"; 
 		 }
 		 con.close(); 
