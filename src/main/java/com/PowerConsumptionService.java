@@ -29,13 +29,14 @@ public class PowerConsumptionService {
 	 @Path("/")
 	 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	 @Produces(MediaType.TEXT_PLAIN)
-	 public String InsertPowerConsumptionDetails(@FormParam("accountNumber") String accountNumber,
-			 				@FormParam("customerName") String customerName,
+	 public String InsertPowerConsumptionDetails(@FormParam("userID") String userID,
+			 				@FormParam("account_Number") String account_Number,
+			 				@FormParam("cus_name") String cus_name,
 			 				@FormParam("units") String units,
 			 				@FormParam("days") String days)
 			 				
 	 {
-		 String output = consumeOb.InsertPowerConsumptionDetails(accountNumber,customerName,units,days);
+		 String output = consumeOb.InsertPowerConsumptionDetails(userID,account_Number,cus_name,units,days);
 		 return output; 
 	 }
 }
