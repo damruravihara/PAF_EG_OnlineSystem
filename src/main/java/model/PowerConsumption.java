@@ -13,7 +13,7 @@ public class PowerConsumption {
 		{
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/eg_online_system", "root", "pafproject");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/eg_online_system", "root", "rusiru123");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -22,7 +22,8 @@ public class PowerConsumption {
 		return con;
 	}	
 
-public String InsertPowerConsumptionDetails(String customerName, String accountNumber, String units, String days) {
+	//column name
+public String InsertPowerConsumptionDetails(String userID, String account_Number, String cus_name, String units, String days) {
  
 	String output = "";
 	try {
@@ -32,16 +33,18 @@ public String InsertPowerConsumptionDetails(String customerName, String accountN
 		{return  "Error while connecting to the database for inserting.";}
 		
 		// create a prepared statement
-		String query = "  insert into powerconsumption (`accountNumber`,`customerName`,`units`,`days`)" + " values (?, ?, ?, ?)";
+		//column name
+		String query = "  insert into power_consumption (`idpower_consumption`,`userID`,`account_Number`,`cus_name`,`units`,`days`)" + " values (?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		
 		 // binding values
 		 preparedStmt.setInt(1, 0); 
-		 preparedStmt.setString(2, accountNumber);
-		 preparedStmt.setString(3, customerName); 
-		 preparedStmt.setString(4, units); 
-		 preparedStmt.setString(5, days);
+		 preparedStmt.setString(2, userID);
+		 preparedStmt.setString(3, account_Number);
+		 preparedStmt.setString(4, cus_name); 
+		 preparedStmt.setString(5, units); 
+		 preparedStmt.setString(6, days);
 	
 		 
 		// execute the statement
@@ -71,28 +74,33 @@ public String readPwerConsumption() {
 		}
 		
 		 // Prepare the html table to be displayed
-		 output = "<table border='1'><tr><th>Customer Name</th><th>Customer Address</th>" +
-		 "<th>Phone Number</th>" + 
-		 "<th>NIC</th>" +
-		 "<th>UserName</th>" +
-		 "<th>Update</th><th>Remove</th></tr>";
+		 output = "<table border='1'>"
+		 		+ "<tr>"
+		 		+ "<th>Customer ID</th>"
+		 		+ "<th>Account Number</th>" +
+		 		  "<th>CustomerName</th>" + 
+		 		  "<th>Units</th>" +
+		 		  "<th>Days</th>" +
+		 		  "<th>Update</th>"+
+		 		  "<th>Remove</th></tr>";
 		 
-		 String query = "select * from customer"; 
+		 String query = "select * from power_consumption"; 
 		 Statement stmt = con.createStatement(); 
 		 ResultSet rs = stmt.executeQuery(query); 
 		 
 		 while(rs.next()) {
 			 
-			 
-			 String accountNumber = Integer.toString(rs.getInt("accountNumber")); 
-			 String customerName = rs.getString("customerName"); 
+			 String userID = rs.getString("userID");
+			 String account_Number = rs.getString("account_Number"); 
+			 String cus_name = rs.getString("cus_name"); 
 			 String units = rs.getString("units"); 
 			 String days = rs.getString("days"); 
 			
 			 
 			 // Add into the html table
-			 output += "<tr><td>" + accountNumber + "</td>"; 
-			 output += "<td>" + customerName + "</td>"; 
+			 output += "<tr><td>" + userID + "</td>"; 
+			 output += "<td>" + account_Number + "</td>";
+			 output += "<td>" + cus_name + "</td>"; 
 			 output += "<td>" + units + "</td>"; 
 			 output += "<td>" + days + "</td>";
 			 
@@ -100,7 +108,7 @@ public String readPwerConsumption() {
 			 // buttons
 			 output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>" + "<td><form method='post' action='customer.jsp'>"
 			 + "<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
-			 + "<input name='idcustomer' type='hidden' value='" + accountNumber + "'>" + "</form></td></tr>"; 
+			 + "<input name='idcustomer' type='hidden' value='" + account_Number + "'>" + "</form></td></tr>"; 
 		 }
 		 con.close(); 
 		 // Complete the html table
