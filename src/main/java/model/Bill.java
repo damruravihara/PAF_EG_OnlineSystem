@@ -117,8 +117,91 @@ public class Bill {
 			
 			return output;
 		}
+		
+		
+		//update bill data	
+		
+		public String updateBill(String idbill, String userId,String customername, String month, String billType, String billamount) 
+		{
+			String output = "";
+			
+			try {
+				Connection con = connect();
+				
+				if (con == null)
+				{return  "Error while connecting to the database for updating.";}
+				
+				// create a prepared statement
+				String query = "UPDATE bill SET userId=?, customername=?, month=?, billType=?, billamount=? WHERE idbill=?";
+								
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+				
+				 // binding values
+				 preparedStmt.setString(1, userId); 
+				 preparedStmt.setString(2, customername); 
+				 preparedStmt.setString(3, month); 
+				 preparedStmt.setString(4, billType);
+				 preparedStmt.setString(5, billamount);
+				 preparedStmt.setInt(6, Integer.parseInt(idbill));
+		
+				 
+				// execute the statement
+				 preparedStmt.execute(); 
+				 con.close(); 
+				 
+				 output = "Updated successfully"; 
+			}
+			catch (Exception e) {
+				 output = "Error while updating the Bill."; 
+				 System.err.println(e.getMessage()); 
+			}
+			
+			return output;
+		} 
+		
+		
+		
+	//delete bill data
+		
+		public String deleteBill(String idbill)
+		{
+			String output = "";
+			
+			 try
+			 {
+				 	Connection con = connect();
+				 
+				 	if (con == null)
+				 	{return "Error while connecting to the database for deleting."; }
+				 
+					 // create a prepared statement
+					 String query = "delete from bill where idbill=?";
+					 
+					 PreparedStatement preparedStmt = con.prepareStatement(query);
+					 
+					 // binding values
+					 preparedStmt.setInt(1, Integer.parseInt(idbill));
+					 
+					 // execute the statement
+					 preparedStmt.execute();
+					 con.close();
+					 
+					 output = "Deleted successfully";
+			 
+			 }
+			 catch (Exception e)
+			 {
+				 output = "Error while deleting the item.";
+				 System.err.println(e.getMessage());
+			 }
+			 
+			 return output;
+		}
+		
+	}
 	
-}
+
+
 
 
 
