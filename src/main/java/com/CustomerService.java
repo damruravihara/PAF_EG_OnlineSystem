@@ -28,16 +28,22 @@ public class CustomerService {
 	 
 	 @POST
 	 @Path("/")
-	 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	 @Consumes(MediaType.APPLICATION_JSON)
 	 @Produces(MediaType.TEXT_PLAIN)
-	 public String insertCustomer(@FormParam("cus_name") String cus_name,
-			 				@FormParam("cus_address") String cus_address,
-			 				@FormParam("cus_phone_no") String cus_phone_no,
-			 				@FormParam("cus_nic") String cus_nic,
-			 				@FormParam("username") String username,
-			 				@FormParam("password") String password,
-	 						@FormParam("account_number") String account_number)
+	 public String insertCustomer(String insertData)
 	 {
+			//Convert the input string to a JSON object 
+		 JsonObject insertObject = new JsonParser().parse(insertData).getAsJsonObject();
+		 
+		 String cus_name = insertObject.get("cus_name").getAsString();
+		 String cus_address = insertObject.get("cus_address").getAsString();
+		 String cus_phone_no = insertObject.get("cus_phone_no").getAsString();
+		 String cus_nic = insertObject.get("cus_nic").getAsString();
+		 String username = insertObject.get("username").getAsString();
+		 String password = insertObject.get("password").getAsString();
+		 String account_number = insertObject.get("account_number").getAsString();
+
+
 		 String output = customerObj.insertCustomer(cus_name, cus_address, cus_phone_no, cus_nic,username,password,account_number); 
 		 return output; 
 	 }
