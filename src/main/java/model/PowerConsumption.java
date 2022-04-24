@@ -121,5 +121,76 @@ public String readPwerConsumption() {
 	}
 	
 	return output;
+	}
+
+public String updateConsumption(String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
+	
+	String output = "";
+	
+	try {
+		Connection con = connect();
+		
+		if (con == null)
+		{return  "Error while connecting to the database for updating.";}
+		
+		// create a prepared statement
+		String query = "  UPDATE power_consumption SET account_Number=?,cus_name=?,units=?,days=?,generated_date=? where userID=?"  ;
+		
+		PreparedStatement preparedStmt = con.prepareStatement(query);
+		
+		 // binding values
+		  
+		 preparedStmt.setString(1, account_Number); 
+		 preparedStmt.setString(2, cus_name); 
+		 preparedStmt.setString(3, units);
+		 preparedStmt.setString(4, days);
+		 preparedStmt.setString(5, generated_date);
+		 preparedStmt.setString(6,userID); 
+		 
+		 
+		// execute the statement
+		 
+		 preparedStmt.execute(); 
+		 con.close(); 
+		 output = "Updated successful"; 
+	}
+	catch (Exception e) {
+		 output = "Error while Update the Customer."; 
+		 System.err.println(e.getMessage()); 
+	}
+	
+	return output;
+	}
+
+
+public String deleteConsume(String userID) {
+	 String output = ""; 
+	 try {
+		 Connection con = connect(); 
+		 
+		 if (con == null) 
+		 {return "Error while connecting to the database for deleting."; }
+		 
+		 // create a prepared statement
+		 String query = "delete from power_consumption where userID=?"; 
+		 
+		 PreparedStatement preparedStmt = con.prepareStatement(query); 
+		 
+		 // binding values
+		 preparedStmt.setInt(1, Integer.parseInt(userID)); 
+		 
+		 // execute the statement
+		 preparedStmt.execute(); 
+		 con.close(); 
+		 
+		 output = "Deleted successfully"; 
+	 }
+	 catch (Exception e) 
+	 { 
+		 output = "Error while deleting the customer."; 
+		 System.err.println(e.getMessage()); 
+	 } 
+	 
+	 return output;
 }
 }
