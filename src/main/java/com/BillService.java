@@ -42,6 +42,29 @@ public class BillService {
 	 }
 	 
 	 
+
+// update (PUT) method
+	 @PUT
+	 @Path("/")
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 @Produces(MediaType.TEXT_PLAIN)
+	 public String updateBill(String billData)
+	 {
+		//Convert the input string to a JSON object
+		 JsonObject billObject = new JsonParser().parse(billData).getAsJsonObject();
+		 
+		//Read the values from the JSON object
+		 String idbill = billObject.get("idbill").getAsString();
+		 String userId = billObject.get("userId").getAsString();
+		 String customername = billObject.get("customername").getAsString();
+		 String month = billObject.get("month").getAsString();
+		 String billType = billObject.get("billType").getAsString();
+		 String billamount = billObject.get("billamount").getAsString();
+		 
+		 String output = billObj.updateBill(idbill,userId,customername,month,billType,billamount);
+		 
+		return output; 
+	 } 
 	
 	  
 }
