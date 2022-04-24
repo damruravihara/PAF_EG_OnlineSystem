@@ -121,5 +121,44 @@ public String readPwerConsumption() {
 	}
 	
 	return output;
+	}
+
+public String updateConsumption(String idpower_consumption,String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
+	
+	String output = "";
+	
+	try {
+		Connection con = connect();
+		
+		if (con == null)
+		{return  "Error while connecting to the database for updating.";}
+		
+		// create a prepared statement
+		String query = "  UPDATE power_consumption SET userID=?,account_Number=?,cus_name=?,units=?,days=?,generated_date=? where idpower_consumption=?"  ;
+		
+		PreparedStatement preparedStmt = con.prepareStatement(query);
+		
+		 // binding values
+		 preparedStmt.setString(1, userID); 
+		 preparedStmt.setString(2, account_Number); 
+		 preparedStmt.setString(3, cus_name); 
+		 preparedStmt.setString(4, units);
+		 preparedStmt.setString(5, days);
+		 preparedStmt.setString(6, generated_date);
+		 preparedStmt.setInt(7, Integer.parseInt(idpower_consumption)); 
+		 
+		 
+		// execute the statement
+		 
+		 preparedStmt.execute(); 
+		 con.close(); 
+		 output = "Updated successful"; 
+	}
+	catch (Exception e) {
+		 output = "Error while Update the Customer."; 
+		 System.err.println(e.getMessage()); 
+	}
+	
+	return output;
 }
 }
