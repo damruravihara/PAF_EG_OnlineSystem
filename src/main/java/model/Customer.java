@@ -117,4 +117,95 @@ public class Customer {
 		
 		return output;
 	}
+	
+	public String loginCustomer(String username, String password) {
+		
+		String output = "";
+		
+		try {
+			Connection con = connect();
+			
+			if(con == null)
+			{
+				return "Error while connecting to the database for reading."; 
+			}
+			
+			output += "<ul>";
+			
+			 String query = "SELECT * FROM customer WHERE username=?";
+			 
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+			 preparedStmt.setString(1, username);
+			 preparedStmt.setString(2, password);
+			 
+//			 preparedStmt.execute();
+//			 Statement stmt = con.createStatement(); 
+			 ResultSet rs = preparedStmt.executeQuery(query); 
+			 
+			 while(rs.next()) {
+				 String idcustomer = Integer.toString(rs.getInt("idcustomer")); 
+				 String cus_name = rs.getString("cus_name"); 
+				 String cus_address = rs.getString("cus_address"); 
+				 String cus_phone_no = rs.getString("cus_phone_no"); 
+				 String cus_nic = rs.getString("cus_nic");
+				 
+				 
+				 // Add into the html list
+				 output += "<li>Name</li><li>"+cus_name+"</li>";
+				 output += "<li>Address</li><li>"+cus_address+"</li>";
+				 output += "<li>Phone</li><li>"+cus_phone_no+"</li>";
+				 output += "<li>NIC</li><li>"+cus_nic+"</li>";
+				 output += "<li>UserName</li><li>"+username+"</li>";
+
+			 }
+			 con.close();
+			 
+			 output += "</ul>";
+		}
+		catch(Exception e)
+		{
+			 output = "Incorrect UserName or password."; 
+			 System.err.println(e.getMessage()); 
+		}
+		
+		return output;
+	}
+	
+	public String updateCustomer(String idcustomer,String cus_name, String cus_address, String cus_phone_no, String cus_nic, String username, String account_number) {
+		
+		String output = "";
+		
+		try {
+			Connection con = connect();
+			
+			if (con == null)
+			{return  "Error while connecting to the database for inserting.";}
+			
+			// create a prepared statement
+			String query = "  UPDATE customer SET cus_name=?,cus_address=?,cus_phone_no=?,cus_nic=?,username=?,account_number=? WHERE idcustomer=?" ;
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			 // binding values
+			 preparedStmt.setString(1, cus_name); 
+			 preparedStmt.setString(2, cus_address); 
+			 preparedStmt.setString(3, cus_phone_no); 
+			 preparedStmt.setString(4, cus_nic);
+			 preparedStmt.setString(5, username);
+			 preparedStmt.setString(6, account_number);
+			 preparedStmt.setInt(7, Integer.parseInt(idcustomer)); 
+			 
+			// execute the statement
+			 
+			 preparedStmt.execute(); 
+			 con.close(); 
+			 output = "Updated successful"; 
+		}
+		catch (Exception e) {
+			 output = "Error while Update the Customer."; 
+			 System.err.println(e.getMessage()); 
+		}
+		
+		return output;
+	}
 }
