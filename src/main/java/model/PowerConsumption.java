@@ -1,10 +1,9 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement; 
+import java.sql.*;  
 
 public class PowerConsumption {
+	
 	
 	private Connection connect()
 	{
@@ -14,7 +13,7 @@ public class PowerConsumption {
 		{
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/eg_online_system", "root", "pafproject");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/eg_online_system", "root", "rusiru123");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -23,7 +22,8 @@ public class PowerConsumption {
 		return con;
 	}	
 
-public String InsertPowerConsumptionDetails(String customerName, int accountNumber, int units, int days) {
+	//column name
+public String InsertPowerConsumptionDetails(String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
  
 	String output = "";
 	try {
@@ -33,16 +33,19 @@ public String InsertPowerConsumptionDetails(String customerName, int accountNumb
 		{return  "Error while connecting to the database for inserting.";}
 		
 		// create a prepared statement
-		String query = "  insert into customer (`accountNumber`,`customerName`,`units`,`days`)" + " values (?, ?, ?, ?)";
+		//column name
+		String query = "  insert into power_consumption (`idpower_consumption`,`userID`,`account_Number`,`cus_name`,`units`,`days`,`generated_date`)" + " values (?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		
 		 // binding values
 		 preparedStmt.setInt(1, 0); 
-		 preparedStmt.setInt(2, accountNumber);
-		 preparedStmt.setString(3, customerName); 
-		 preparedStmt.setInt(4, units); 
-		 preparedStmt.setInt(5, days);
+		 preparedStmt.setString(2, userID);
+		 preparedStmt.setString(3, account_Number);
+		 preparedStmt.setString(4, cus_name); 
+		 preparedStmt.setString(5, units); 
+		 preparedStmt.setString(6, days);
+		 preparedStmt.setString(7, generated_date);
 	
 		 
 		// execute the statement
@@ -52,10 +55,71 @@ public String InsertPowerConsumptionDetails(String customerName, int accountNumb
 		 output = "Inserted successfully"; 
 	}
 	catch (Exception e) {
-		 output = "Error while inserting the Customer."; 
+		 output = "Error while inserting the Power Consumption."; 
 		 System.err.println(e.getMessage()); 
 	}
 	
 	return output;
 	}
+
+public String readPwerConsumption() {
+	
+	String output = "";
+	
+	try {
+		
+		Connection con = connect();
+		
+		if(con == null) {
+			return "Error while connecting to the database for reading.";
+		}
+		
+		 // Prepare the html table to be displayed
+		 output = "<table border='1'>"
+		 		+ "<tr>"
+		 		+ "<th>Customer ID</th>"
+		 		+ "<th>Account Number</th>" +
+		 		  "<th>CustomerName</th>" + 
+		 		  "<th>Units</th>" +
+		 		  "<th>Days</th>" +	
+		 		 "<th>Generated Date</th></tr>";
+		 
+		 String query = "select * from power_consumption"; 
+		 Statement stmt = con.createStatement(); 
+		 ResultSet rs = stmt.executeQuery(query); 
+		 
+		 while(rs.next()) {
+			 
+			 String userID = rs.getString("userID");
+			 String account_Number = rs.getString("account_Number"); 
+			 String cus_name = rs.getString("cus_name"); 
+			 String units = rs.getString("units"); 
+			 String days = rs.getString("days"); 
+			 String generated_date = rs.getString("generated_date");
+			
+			 
+			 // Add into the HTML table
+			 output += "<tr><td>" + userID + "</td>"; 
+			 output += "<td>" + account_Number + "</td>";
+			 output += "<td>" + cus_name + "</td>"; 
+			 output += "<td>" + units + "</td>"; 
+			 output += "<td>" + days + "</td>";
+			 output += "<td>" + generated_date + "</td>";
+			 
+			 
+			 // buttons
+			
+		 }
+		 con.close(); 
+		 // Complete the html table
+		 output += "</table>";
+	}
+	catch(Exception e)
+	{
+		 output = "Error while reading the customer."; 
+		 System.err.println(e.getMessage()); 
+	}
+	
+	return output;
+}
 }
