@@ -14,7 +14,6 @@ import org.jsoup.nodes.Document;
 
 @Path("/Customer")
 public class CustomerService {
-	
 	Customer customerObj = new Customer();
 	
 	 @GET
@@ -98,9 +97,4 @@ public class CustomerService {
 		 return output;
 
 	 }
-	 
-	 
-	 
-	 
-
 }

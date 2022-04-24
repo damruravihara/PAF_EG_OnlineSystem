@@ -3,7 +3,6 @@ package model;
 import java.sql.*; 
 
 public class Customer {
-	
 	private Connection connect()
 	{
 		Connection con = null;
@@ -118,7 +117,6 @@ public class Customer {
 		
 		return output;
 	}
-	
 	
 	public String loginCustomer(String username, String password) {
 		
