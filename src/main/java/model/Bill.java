@@ -160,6 +160,45 @@ public String insertBill(String userId,String customername, String month, String
 		return output;
 	} 
 	
+	
+	
+//delete bill data
+	
+	public String deleteBill(String idbill)
+	{
+		String output = "";
+		
+		 try
+		 {
+			 	Connection con = connect();
+			 
+			 	if (con == null)
+			 	{return "Error while connecting to the database for deleting."; }
+			 
+				 // create a prepared statement
+				 String query = "delete from bill where idbill=?";
+				 
+				 PreparedStatement preparedStmt = con.prepareStatement(query);
+				 
+				 // binding values
+				 preparedStmt.setInt(1, Integer.parseInt(idbill));
+				 
+				 // execute the statement
+				 preparedStmt.execute();
+				 con.close();
+				 
+				 output = "Deleted successfully";
+		 
+		 }
+		 catch (Exception e)
+		 {
+			 output = "Error while deleting the item.";
+			 System.err.println(e.getMessage());
+		 }
+		 
+		 return output;
+	}
+	
 }
 
 
