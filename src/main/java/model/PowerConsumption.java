@@ -123,7 +123,7 @@ public String readPwerConsumption() {
 	return output;
 	}
 
-public String updateConsumption(String idpower_consumption,String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
+public String updateConsumption(String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
 	
 	String output = "";
 	
@@ -134,18 +134,18 @@ public String updateConsumption(String idpower_consumption,String userID, String
 		{return  "Error while connecting to the database for updating.";}
 		
 		// create a prepared statement
-		String query = "  UPDATE power_consumption SET userID=?,account_Number=?,cus_name=?,units=?,days=?,generated_date=? where idpower_consumption=?"  ;
+		String query = "  UPDATE power_consumption SET account_Number=?,cus_name=?,units=?,days=?,generated_date=? where userID=?"  ;
 		
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		
 		 // binding values
-		 preparedStmt.setString(1, userID); 
-		 preparedStmt.setString(2, account_Number); 
-		 preparedStmt.setString(3, cus_name); 
-		 preparedStmt.setString(4, units);
-		 preparedStmt.setString(5, days);
-		 preparedStmt.setString(6, generated_date);
-		 preparedStmt.setInt(7, Integer.parseInt(idpower_consumption)); 
+		  
+		 preparedStmt.setString(1, account_Number); 
+		 preparedStmt.setString(2, cus_name); 
+		 preparedStmt.setString(3, units);
+		 preparedStmt.setString(4, days);
+		 preparedStmt.setString(5, generated_date);
+		 preparedStmt.setString(6,userID); 
 		 
 		 
 		// execute the statement
