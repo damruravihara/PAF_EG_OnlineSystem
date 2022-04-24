@@ -23,7 +23,7 @@ public class PowerConsumption {
 	}	
 
 	//column name
-public String InsertPowerConsumptionDetails(String userID, String account_Number, String cus_name, String units, String days) {
+public String InsertPowerConsumptionDetails(String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
  
 	String output = "";
 	try {
@@ -34,7 +34,7 @@ public String InsertPowerConsumptionDetails(String userID, String account_Number
 		
 		// create a prepared statement
 		//column name
-		String query = "  insert into power_consumption (`idpower_consumption`,`userID`,`account_Number`,`cus_name`,`units`,`days`)" + " values (?, ?, ?, ?, ?, ?)";
+		String query = "  insert into power_consumption (`idpower_consumption`,`userID`,`account_Number`,`cus_name`,`units`,`days`,`generated_date`)" + " values (?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		
@@ -45,6 +45,7 @@ public String InsertPowerConsumptionDetails(String userID, String account_Number
 		 preparedStmt.setString(4, cus_name); 
 		 preparedStmt.setString(5, units); 
 		 preparedStmt.setString(6, days);
+		 preparedStmt.setString(7, generated_date);
 	
 		 
 		// execute the statement
@@ -80,9 +81,8 @@ public String readPwerConsumption() {
 		 		+ "<th>Account Number</th>" +
 		 		  "<th>CustomerName</th>" + 
 		 		  "<th>Units</th>" +
-		 		  "<th>Days</th>" +
-		 		  "<th>Update</th>"+
-		 		  "<th>Remove</th></tr>";
+		 		  "<th>Days</th>" +	
+		 		 "<th>Generated Date</th></tr>";
 		 
 		 String query = "select * from power_consumption"; 
 		 Statement stmt = con.createStatement(); 
@@ -95,20 +95,20 @@ public String readPwerConsumption() {
 			 String cus_name = rs.getString("cus_name"); 
 			 String units = rs.getString("units"); 
 			 String days = rs.getString("days"); 
+			 String generated_date = rs.getString("generated_date");
 			
 			 
-			 // Add into the html table
+			 // Add into the HTML table
 			 output += "<tr><td>" + userID + "</td>"; 
 			 output += "<td>" + account_Number + "</td>";
 			 output += "<td>" + cus_name + "</td>"; 
 			 output += "<td>" + units + "</td>"; 
 			 output += "<td>" + days + "</td>";
+			 output += "<td>" + generated_date + "</td>";
 			 
 			 
 			 // buttons
-			 output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>" + "<td><form method='post' action='customer.jsp'>"
-			 + "<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
-			 + "<input name='idcustomer' type='hidden' value='" + account_Number + "'>" + "</form></td></tr>"; 
+			
 		 }
 		 con.close(); 
 		 // Complete the html table
