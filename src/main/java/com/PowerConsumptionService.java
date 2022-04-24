@@ -1,6 +1,7 @@
 package com;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -65,4 +66,18 @@ public class PowerConsumptionService {
 		 return output;
 	 }
 	 
+	 @DELETE
+	 @Path("/")
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 @Produces(MediaType.TEXT_PLAIN)
+	 public String deleteConsume(String deleteConsumeDetails)
+	 {
+		 JsonObject updateCons = new JsonParser().parse(deleteConsumeDetails).getAsJsonObject();
+		 
+		 String userID = updateCons.get("userID").getAsString();
+		 
+		 String output = consumeOb.deleteConsume(userID);
+		 return output;
+
+	 }
 }
