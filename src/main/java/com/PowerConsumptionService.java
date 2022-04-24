@@ -33,10 +33,11 @@ public class PowerConsumptionService {
 			 				@FormParam("account_Number") String account_Number,
 			 				@FormParam("cus_name") String cus_name,
 			 				@FormParam("units") String units,
-			 				@FormParam("days") String days)
+			 				@FormParam("days") String days,
+	 						@FormParam("generated_date") String generated_date)
 			 				
 	 {
-		 String output = consumeOb.InsertPowerConsumptionDetails(userID,account_Number,cus_name,units,days);
+		 String output = consumeOb.InsertPowerConsumptionDetails(userID,account_Number,cus_name,units,days,generated_date);
 		 return output; 
 	 }
 }
