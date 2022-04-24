@@ -160,5 +160,37 @@ public String updateConsumption(String idpower_consumption,String userID, String
 	}
 	
 	return output;
+	}
+
+
+public String deleteConsume(String userID) {
+	 String output = ""; 
+	 try {
+		 Connection con = connect(); 
+		 
+		 if (con == null) 
+		 {return "Error while connecting to the database for deleting."; }
+		 
+		 // create a prepared statement
+		 String query = "delete from power_consumption where userID=?"; 
+		 
+		 PreparedStatement preparedStmt = con.prepareStatement(query); 
+		 
+		 // binding values
+		 preparedStmt.setInt(1, Integer.parseInt(userID)); 
+		 
+		 // execute the statement
+		 preparedStmt.execute(); 
+		 con.close(); 
+		 
+		 output = "Deleted successfully"; 
+	 }
+	 catch (Exception e) 
+	 { 
+		 output = "Error while deleting the customer."; 
+		 System.err.println(e.getMessage()); 
+	 } 
+	 
+	 return output;
 }
 }
