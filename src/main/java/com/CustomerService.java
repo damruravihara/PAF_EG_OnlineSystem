@@ -35,9 +35,10 @@ public class CustomerService {
 			 				@FormParam("cus_phone_no") String cus_phone_no,
 			 				@FormParam("cus_nic") String cus_nic,
 			 				@FormParam("username") String username,
-			 				@FormParam("password") String password)
+			 				@FormParam("password") String password,
+	 						@FormParam("account_number") String account_number)
 	 {
-		 String output = customerObj.insertCustomer(cus_name, cus_address, cus_phone_no, cus_nic,username,password); 
+		 String output = customerObj.insertCustomer(cus_name, cus_address, cus_phone_no, cus_nic,username,password,account_number); 
 		 return output; 
 	 }
 	 
@@ -56,4 +57,26 @@ public class CustomerService {
 		 String output = customerObj.loginCustomer(username, password);
 		 return output;
 	 }
+	 
+	 @PUT
+	 @Path("/")
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 @Produces(MediaType.TEXT_PLAIN)
+	 public String updateCustomer(String updateCustomerData)
+	 {
+		 JsonObject updateObject = new JsonParser().parse(updateCustomerData).getAsJsonObject();
+		 
+		 String idcustomer = updateObject.get("idcustomer").getAsString();
+		 String cus_name = updateObject.get("cus_name").getAsString();
+		 String cus_address = updateObject.get("cus_address").getAsString();
+		 String cus_phone_no = updateObject.get("cus_phone_no").getAsString();
+		 String cus_nic = updateObject.get("cus_nic").getAsString();
+		 String username = updateObject.get("username").getAsString();
+		 String account_number = updateObject.get("account_number").getAsString();
+		 
+		 String output = customerObj.updateCustomer(idcustomer, cus_name, cus_address, cus_phone_no, cus_nic, username, account_number);
+		 return output;
+	 }
+	 
+
 }
