@@ -84,5 +84,23 @@ public class CustomerService {
 		 return output;
 	 }
 	 
+	 @DELETE
+	 @Path("/")
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 @Produces(MediaType.TEXT_PLAIN)
+	 public String deleteCustomer(String deleteCustomerData)
+	 {
+		 JsonObject updateObject = new JsonParser().parse(deleteCustomerData).getAsJsonObject();
+		 
+		 String idcustomer = updateObject.get("idcustomer").getAsString();
+		 
+		 String output = customerObj.deleteCustomer(idcustomer);
+		 return output;
+
+	 }
+	 
+	 
+	 
+	 
 
 }
