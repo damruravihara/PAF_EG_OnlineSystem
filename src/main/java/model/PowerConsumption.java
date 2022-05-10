@@ -22,7 +22,7 @@ public class PowerConsumption {
 		return con;
 	}	
 
-	//column name
+	//Insert
 public String InsertPowerConsumptionDetails(String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
  
 	String output = "";
@@ -33,7 +33,7 @@ public String InsertPowerConsumptionDetails(String userID, String account_Number
 		{return  "Error while connecting to the database for inserting.";}
 		
 		// create a prepared statement
-		//column name
+		
 		String query = "  insert into power_consumption (`idpower_consumption`,`userID`,`account_Number`,`cus_name`,`units`,`days`,`generated_date`)" + " values (?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement preparedStmt = con.prepareStatement(query);
@@ -62,6 +62,7 @@ public String InsertPowerConsumptionDetails(String userID, String account_Number
 	return output;
 	}
 
+//Retrieve
 public String readPwerConsumption() {
 	
 	String output = "";
@@ -123,7 +124,9 @@ public String readPwerConsumption() {
 	return output;
 	}
 
-public String updateConsumption(String idpower_consumption,String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
+//Update
+
+public String updateConsumption(String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
 	
 	String output = "";
 	
@@ -134,18 +137,18 @@ public String updateConsumption(String idpower_consumption,String userID, String
 		{return  "Error while connecting to the database for updating.";}
 		
 		// create a prepared statement
-		String query = "  UPDATE power_consumption SET userID=?,account_Number=?,cus_name=?,units=?,days=?,generated_date=? where idpower_consumption=?"  ;
+		String query = "  UPDATE power_consumption SET account_Number=?,cus_name=?,units=?,days=?,generated_date=? where userID=?"  ;
 		
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		
 		 // binding values
-		 preparedStmt.setString(1, userID); 
-		 preparedStmt.setString(2, account_Number); 
-		 preparedStmt.setString(3, cus_name); 
-		 preparedStmt.setString(4, units);
-		 preparedStmt.setString(5, days);
-		 preparedStmt.setString(6, generated_date);
-		 preparedStmt.setInt(7, Integer.parseInt(idpower_consumption)); 
+		  
+		 preparedStmt.setString(1, account_Number); 
+		 preparedStmt.setString(2, cus_name); 
+		 preparedStmt.setString(3, units);
+		 preparedStmt.setString(4, days);
+		 preparedStmt.setString(5, generated_date);
+		 preparedStmt.setString(6,userID); 
 		 
 		 
 		// execute the statement
@@ -160,5 +163,37 @@ public String updateConsumption(String idpower_consumption,String userID, String
 	}
 	
 	return output;
+	}
+
+//Delete
+public String deleteConsume(String userID) {
+	 String output = ""; 
+	 try {
+		 Connection con = connect(); 
+		 
+		 if (con == null) 
+		 {return "Error while connecting to the database for deleting."; }
+		 
+		 // create a prepared statement
+		 String query = "delete from power_consumption where userID=?"; 
+		 
+		 PreparedStatement preparedStmt = con.prepareStatement(query); 
+		 
+		 // binding values
+		 preparedStmt.setInt(1, Integer.parseInt(userID)); 
+		 
+		 // execute the statement
+		 preparedStmt.execute(); 
+		 con.close(); 
+		 
+		 output = "Deleted successfully"; 
+	 }
+	 catch (Exception e) 
+	 { 
+		 output = "Error while deleting the customer."; 
+		 System.err.println(e.getMessage()); 
+	 } 
+	 
+	 return output;
 }
 }
