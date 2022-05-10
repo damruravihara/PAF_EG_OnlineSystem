@@ -22,7 +22,7 @@ public class PowerConsumption {
 		return con;
 	}	
 
-	//column name
+	//Insert
 public String InsertPowerConsumptionDetails(String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
  
 	String output = "";
@@ -33,7 +33,7 @@ public String InsertPowerConsumptionDetails(String userID, String account_Number
 		{return  "Error while connecting to the database for inserting.";}
 		
 		// create a prepared statement
-		//column name
+		
 		String query = "  insert into power_consumption (`idpower_consumption`,`userID`,`account_Number`,`cus_name`,`units`,`days`,`generated_date`)" + " values (?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement preparedStmt = con.prepareStatement(query);
@@ -62,6 +62,7 @@ public String InsertPowerConsumptionDetails(String userID, String account_Number
 	return output;
 	}
 
+//Retrieve
 public String readPwerConsumption() {
 	
 	String output = "";
@@ -123,6 +124,8 @@ public String readPwerConsumption() {
 	return output;
 	}
 
+//Update
+
 public String updateConsumption(String userID, String account_Number, String cus_name, String units, String days,String generated_date) {
 	
 	String output = "";
@@ -162,7 +165,7 @@ public String updateConsumption(String userID, String account_Number, String cus
 	return output;
 	}
 
-
+//Delete
 public String deleteConsume(String userID) {
 	 String output = ""; 
 	 try {
