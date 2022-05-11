@@ -26,7 +26,7 @@
         <a class="nav-link" href="Customer.jsp">Customer</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Power Consumption</a>
+        <a class="nav-link" href="PowerConsumption.jsp">Power Consumption</a>
       </li>      
       <li class="nav-item">
         <a class="nav-link" href="#">Bill</a>
