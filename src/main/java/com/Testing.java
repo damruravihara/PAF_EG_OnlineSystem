@@ -14,4 +14,11 @@ public class Testing {
 	 { 
 	 return "Hello world."; 
 	 }
+	@GET
+	@Path("/world") 
+	@Produces(MediaType.TEXT_PLAIN) 
+	public String world() 
+	 { 
+	 return "world."; 
+	 }
 }
